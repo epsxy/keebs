@@ -1,6 +1,8 @@
 # keebs
 
-Storing experimentation about keyboards builds and layouts
+![thumbnail](thumbnail.png)
+
+Storing experimentations about keyboards builds and layouts
 
 # License
 
