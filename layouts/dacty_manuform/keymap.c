@@ -20,14 +20,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LSFT, FR_Q  , FR_S   , FR_D  , FR_F  , FR_G  ,                         FR_H  , FR_J   , FR_K   , FR_L, FR_M   , FR_UGRV,
      // CTLR   , W     , X      , C      , V     , B     ,                        N     , `,`    , ;      , :      , !      , *       ,
         KC_LCTL, FR_W  , FR_X   , FR_C   , FR_V  , FR_B  ,                        FR_N  , FR_COMM, FR_SCLN, FR_COLN, FR_EXLM, FR_ASTR ,
-                      // LSUPER , LALT   ,                                                         RLAT   , =
-                         KC_LGUI, KC_LALT,                                                         KC_RALT, FR_EQL,
+                      // LALT   , LSUPER ,                                                         RLAT   , =
+                         KC_LALT, KC_LGUI,                                                         KC_RALT, FR_EQL,
                              // SPC   ,  BSPC        ,                                     DEL   , ENTER  ,
                                 KC_SPC, KC_BSPC      ,                                     KC_DEL, KC_ENT ,
                                      // BOTTOM RIGHT, TOP RIGHT            // TOP LEFT, BOTTOM LEFT
-                                        _______, TO(LAYER_1),                 TO(LAYER_2) ,_______,
+                         LCTL(LSFT(LGUI(FR_QUOT))), TO(LAYER_1),                 TO(LAYER_2) ,LCTL(LSFT(LGUI(FR_QUOT))),
                                      // BOTTOM LEFT, TOP LEFT              // TOP RIGHT, BOTTOM RIGHT
-                                        _______, OSL(LAYER_1),                OSL(LAYER_2),_______
+                                        LCA(KC_SPC), OSL(LAYER_1),            OSL(LAYER_2),LCA(KC_SPC)
     ),
     [_LAYER_1] = LAYOUT_5x6(
         KC_ESC , KC_F1  , KC_F2  , KC_F3   , KC_F4 , KC_F5 ,                         KC_F6  , KC_F7 , KC_F8 , KC_F9 , KC_F10, KC_F11,
