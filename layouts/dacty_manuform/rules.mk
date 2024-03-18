@@ -14,4 +14,4 @@ SPLIT_KEYBOARD = yes        # Dactyl Manuform is a split KB
 #BOOTLOADER = atmel-dfu     # Elite-C bootloader
 BOOTLOADER = caterina       # Pro Micro bootloader
 AUTO_SHIFT_ENABLE = yes     # For shift keys combinations
-#TAP_DANCE_ENABLE=yes        # Tap dance enabled
+TAP_DANCE_ENABLE=yes        # Tap dance enabled
