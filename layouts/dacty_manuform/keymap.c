@@ -53,16 +53,20 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_N_TLD] = ACTION_TAP_DANCE_DOUBLE(FR_N, FR_TILD),
 };
 
+// ---------------------------------------------------- TAP HOLD ----------------------------------------------------
+// TODO: implement
+// ------------------------------------------------------------------------------------------------------------------
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_AZERTY] = LAYOUT_5x6(
      // ESC/L1    , &      , é      , "      , '      , (      ,                     -      , è      , _      , ç      , à      , )      ,
         TD(TD_ESC_L1), FR_AMPR, FR_EACU, FR_DQUO, FR_QUOT, FR_LPRN,               TD(TD_FR_MINS_LPRN), TD(TD_FR_EGRV_RPRN), TD(TD_FR_UNDS_LCBR), TD(TD_FR_CCED_RCBR), TD(TD_FR_AGRV_LBRC), TD(TD_FR_RPRN_RBRC),
-     // TAB    , A     , Z      , E     , R     , T     ,                         Y    , U       , I     , O     , P     , $
-        KC_TAB , FR_A  , FR_Z   , FR_E  , FR_R  , FR_T  ,                         FR_Y  , FR_U   , FR_I  , FR_O  , TD(TD_P_PCT)  , FR_DLR,
+     // TAB    , A     , Z      , E     , R     , T     ,                         Y     , U       , I     , O     , P     , $
+        KC_TAB , FR_A  , FR_Z   , FR_E  , FR_R  , FR_T  ,                         FR_Y  , FR_U   , FR_I  , FR_O  , FR_P  , FR_DLR,
      // LSHIFT , Q     , S      , D    , F     , G     ,                          H     , J      , K      , L   , M      , ù
-        KC_LSFT, FR_Q  , FR_S   , FR_D  , FR_F  , FR_G  ,                         FR_H  , FR_J   , FR_K   , TD(TD_L_PP), FR_M   , FR_UGRV,
+        KC_LSFT, FR_Q  , FR_S   , FR_D  , FR_F  , FR_G  ,                         FR_H  , FR_J   , FR_K   , FR_L , FR_M   , FR_UGRV,
      // CTLR   , W     , X      , C      , V     , B     ,                        N     , `,`    , ;      , :      , !      , *       ,
-        KC_LCTL, FR_W  , FR_X   , TD(TD_C_C)   , FR_V  , FR_B  ,                        TD(TD_N_TLD)  , FR_COMM, FR_SCLN, FR_COLN, FR_EXLM, FR_ASTR ,
+        KC_LCTL, FR_W  , FR_X   , FR_C   , FR_V  , FR_B  ,                        FR_N  , FR_COMM, FR_SCLN, FR_COLN, FR_EXLM, FR_ASTR ,
                       // LALT   , LSUPER ,                                                         RLAT   , =
                          KC_LALT, KC_LGUI,                                                         KC_RALT, FR_EQL,
                              // SPC   ,  BSPC        ,                                     DEL   , ENTER  ,
@@ -95,7 +99,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                          _______,_______,                     TO(AZERTY),_______,
                                          _______,_______,                        _______,_______
     ),
-/*     [_LAYER_2] = LAYOUT_5x6(
+/*
+   [_LAYER_2] = LAYOUT_5x6(
         _______,_______,_______,_______,_______,_______,                         _______,_______,_______,_______,_______,_______,
         _______,_______,_______,_______,_______,_______,                         _______,_______,_______,_______,_______,_______, 
         _______,_______,_______,_______,_______,_______,                         _______,_______,_______,_______,_______,_______,
@@ -104,5 +109,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   _______,_______,                                       _______,_______,
                                           _______,_______,                         _______,_______,
                                           _______,_______,                         _______,_______
-    ), */
+    ),
+*/
 };
