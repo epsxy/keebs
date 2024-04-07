@@ -9,9 +9,10 @@
 #define LAYER_1 MO(_LAYER_1)
 #define LAYER_2 MO(_LAYER_2)
 
+// ---------------------------------------------------- TAP DANCE ----------------------------------------------------
 // Tap Dance declarations
 enum {
-    TD_ESC_L1,
+    TD_ESC_AZERTY,
     TD_FR_MINS_LPRN,
     TD_FR_EGRV_RPRN,
     TD_FR_UNDS_LCBR,
@@ -26,8 +27,8 @@ enum {
 
 // Tap Dance definitions
 tap_dance_action_t tap_dance_actions[] = {
-    // Tap once for Escape, twice for layer 1
-    [TD_ESC_L1] = ACTION_TAP_DANCE_DOUBLE(KC_ESC, TO(LAYER_1)),
+    // Tap once for Escape, twice for AZERTY
+    [TD_ESC_AZERTY] = ACTION_TAP_DANCE_DOUBLE(KC_ESC, TO(AZERTY)),
     // --- PARENTHESES & MISC
     // Tap once for FR_MINS, twice for (
     [TD_FR_MINS_LPRN] = ACTION_TAP_DANCE_DOUBLE(FR_MINS, FR_LPRN),
@@ -52,15 +53,47 @@ tap_dance_action_t tap_dance_actions[] = {
     // Tap once for N, twice for tilde
     [TD_N_TLD] = ACTION_TAP_DANCE_DOUBLE(FR_N, FR_TILD),
 };
+// ------------------------------------------------------------------------------------------------------------------
 
 // ---------------------------------------------------- TAP HOLD ----------------------------------------------------
 // TODO: implement
 // ------------------------------------------------------------------------------------------------------------------
 
+// ---------------------------------------------------- COMBOS ----------------------------------------------------#
+// arrows
+const uint16_t PROGMEM combo_z[]  = {KC_F24, FR_Z, COMBO_END};
+const uint16_t PROGMEM combo_q[]  = {KC_F24, FR_Q, COMBO_END};
+const uint16_t PROGMEM combo_s[]  = {KC_F24, FR_S, COMBO_END};
+const uint16_t PROGMEM combo_d[]  = {KC_F24, FR_D, COMBO_END};
+// symboles
+const uint16_t PROGMEM combo_x[]  = {KC_F24, FR_X, COMBO_END};
+const uint16_t PROGMEM combo_c[]  = {KC_F24, FR_C, COMBO_END};
+const uint16_t PROGMEM combo_6[]  = {KC_F24, FR_MINS, COMBO_END};
+const uint16_t PROGMEM combo_7[]  = {KC_F24, FR_EGRV, COMBO_END};
+const uint16_t PROGMEM combo_8[]  = {KC_F24, FR_UNDS, COMBO_END};
+const uint16_t PROGMEM combo_9[]  = {KC_F24, FR_CCED, COMBO_END};
+const uint16_t PROGMEM combo_10[] = {KC_F24, FR_AGRV, COMBO_END};
+const uint16_t PROGMEM combo_11[] = {KC_F24, FR_RPRN, COMBO_END};
+combo_t key_combos[] = {
+    COMBO(combo_z, KC_UP),
+    COMBO(combo_q, KC_DOWN),
+    COMBO(combo_s, KC_LEFT),
+    COMBO(combo_d, KC_RIGHT),
+    COMBO(combo_x, FR_LABK),
+    COMBO(combo_c, FR_RABK),
+    COMBO(combo_6, FR_LPRN),
+    COMBO(combo_7, FR_RPRN),
+    COMBO(combo_8, FR_LCBR),
+    COMBO(combo_9, FR_RCBR),
+    COMBO(combo_10, FR_LBRC),
+    COMBO(combo_11, FR_RBRC),
+};
+// ------------------------------------------------------------------------------------------------------------------
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_AZERTY] = LAYOUT_5x6(
-     // ESC/L1    , &      , é      , "      , '      , (      ,                     -      , è      , _      , ç      , à      , )      ,
-        TD(TD_ESC_L1), FR_AMPR, FR_EACU, FR_DQUO, FR_QUOT, FR_LPRN,               TD(TD_FR_MINS_LPRN), TD(TD_FR_EGRV_RPRN), TD(TD_FR_UNDS_LCBR), TD(TD_FR_CCED_RCBR), TD(TD_FR_AGRV_LBRC), TD(TD_FR_RPRN_RBRC),
+     // ESC/L1    , &      , é      , "      , '      , (      ,                     -      , è      , _      , ç      , à      , )      , // TD(TD_FR_MINS_LPRN), TD(TD_FR_EGRV_RPRN), TD(TD_FR_UNDS_LCBR), TD(TD_FR_CCED_RCBR), TD(TD_FR_AGRV_LBRC), TD(TD_FR_RPRN_RBRC),
+        TD(TD_ESC_AZERTY), FR_AMPR, FR_EACU, FR_DQUO, FR_QUOT, FR_LPRN,          FR_MINS, FR_EGRV, FR_UNDS, FR_CCED, FR_AGRV, FR_RPRN,
      // TAB    , A     , Z      , E     , R     , T     ,                         Y     , U       , I     , O     , P     , $
         KC_TAB , FR_A  , FR_Z   , FR_E  , FR_R  , FR_T  ,                         FR_Y  , FR_U   , FR_I  , FR_O  , FR_P  , FR_DLR,
      // LSHIFT , Q     , S      , D    , F     , G     ,                          H     , J      , K      , L   , M      , ù
@@ -71,13 +104,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                          KC_LALT, KC_LGUI,                                                         KC_RALT, FR_EQL,
                              // SPC   ,  BSPC        ,                                     DEL   , ENTER  ,
                                 KC_SPC, KC_BSPC      ,                                     KC_DEL, KC_ENT ,
-                      // BOTTOM RIGHT (OSX SCREEN), TOP RIGHT              // TOP LEFT, BOTTOM LEFT
-                         LCTL(LSFT(LGUI(FR_QUOT))), TO(LAYER_1),                 TO(LAYER_2) ,LCTL(LSFT(LGUI(FR_QUOT))),
+                                    // // BOTTOM RIGHT , TOP RIGHT                    TOP LEFT, BOTTOM LEFT
+                                    //    FR_A, FR_B,                                  FR_A, FR_B,
+                                    // // BOTTOM LEFT, TOP LEFT                       TOP RIGHT, BOTTOM RIGHT
+                                    //    FR_C, FR_D,                                  FR_C, FR_D
+                              // BOTTOM RIGHT (OSX Screen) , TOP RIGHT                    TOP LEFT, BOTTOM LEFT
+                              LCTL(LSFT(LGUI(FR_QUOT))), TO(LAYER_1),                 TO(LAYER_2), _______,
+                                    // BOTTOM LEFT, TOP LEFT                       TOP RIGHT, BOTTOM RIGHT (terminal)
+                                       _______, KC_F24,                                  KC_F24, LCA(KC_SPC)
+/*                       // BOTTOM LEFT (OSX SCREEN), TOP RIGHT                // TOP LEFT, BOTTOM LEFT (Screenshot or terminal?)
+                         LCTL(LSFT(LGUI(FR_QUOT))), TO(LAYER_1),            TO(LAYER_2) ,LCTL(LSFT(LGUI(FR_QUOT))),
                                      // BOTTOM LEFT, TOP LEFT              // TOP RIGHT, BOTTOM RIGHT
-                                        LCA(KC_SPC), OSL(LAYER_1),            OSL(LAYER_2),LCA(KC_SPC)
+                                        OSL(LAYER_1), KC_F24,               KC_F24, OSL(LAYER_2) //LCA(KC_SPC) */
     ),
     [_LAYER_1] = LAYOUT_5x6(
-        TD_ESC_L1 , KC_F1  , KC_F2  , KC_F3   , KC_F4 , KC_F5 ,                         KC_F6  , KC_F7 , KC_F8 , KC_F9 , KC_F10, KC_F11,
+        TD_ESC_AZERTY , KC_F1  , KC_F2  , KC_F3   , KC_F4 , KC_F5 ,                         KC_F6  , KC_F7 , KC_F8 , KC_F9 , KC_F10, KC_F11,
         _______,_______ , KC_UP  , FR_CIRC ,_______,_______,                         _______,_______,FR_DIAE,_______,_______, KC_F12,
         _______, KC_LEFT, KC_DOWN, KC_RIGHT,_______,_______,                         _______,_______,_______,_______,_______,_______,
         _______,_______ ,FR_LABK ,FR_RABK  ,_______,_______,                         FR_TILD,_______,_______,_______,_______,_______,
@@ -88,7 +129,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_LAYER_2] = LAYOUT_5x6(
      // _______,_______,_______,_______,_______,_______,                         (      , )     , {     , }     , [     , ]     ,
-      TD_ESC_L1,_______,_______,_______,_______,_______,                         FR_LPRN,FR_RPRN,FR_LCBR,FR_RCBR,FR_LBRC,FR_RBRC,
+      TD_ESC_AZERTY,_______,_______,_______,_______,_______,                         FR_LPRN,FR_RPRN,FR_LCBR,FR_RCBR,FR_LBRC,FR_RBRC,
      // _______,_______,_______,_______,_______,_______,                         _______,_______,_______,_______,_______,_______,
         _______, FR_AT ,_______,_______,_______,_______,                         _______,_______,_______,_______,_______,FR_PERC,
      // _______,_______,_______,_______,_______,_______,                         _______,_______,_______,_______,_______,_______,

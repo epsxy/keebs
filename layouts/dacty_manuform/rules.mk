@@ -15,3 +15,4 @@ SPLIT_KEYBOARD = yes        # Dactyl Manuform is a split KB
 BOOTLOADER = caterina       # Pro Micro bootloader
 AUTO_SHIFT_ENABLE = yes     # For shift keys combinations
 TAP_DANCE_ENABLE=yes        # Tap dance enabled
+COMBO_ENABLE = yes          # Combo enabled

@@ -22,5 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define EE_HANDS
 
-#define TAPPING_TERM 100
+#define TAPPING_TERM 200
+// Allow to use auto shift, without having it affecting letters and auto uppercase on hold
+// Use to have repeated letters on hold
 #define NO_AUTO_SHIFT_ALPHA
