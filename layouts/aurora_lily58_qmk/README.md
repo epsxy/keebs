@@ -23,6 +23,12 @@ make flash
 
 When QMK shows `Waiting for drive to deploy...`, use the Liatris BOOT button to mount `RPI-RP2`.
 
+Encoder behavior:
+
+- tap encoder press: mute
+- turn on Base: scroll
+- turn on Lower: volume up/down
+
 Manual equivalent from the `keebs` repo root:
 
 ```sh
