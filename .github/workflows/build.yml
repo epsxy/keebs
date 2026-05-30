@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 
 env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   QMK_HOME: ${{ github.workspace }}/qmk_firmware
   KEYBOARD: splitkb/aurora/lily58
   KEYMAP: epsxy
