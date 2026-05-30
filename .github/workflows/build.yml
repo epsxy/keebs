@@ -1,5 +1,57 @@
-on: [push, pull_request, workflow_dispatch]
+name: Build QMK firmware
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  QMK_HOME: ${{ github.workspace }}/qmk_firmware
+  KEYBOARD: splitkb/aurora/lily58
+  KEYMAP: epsxy
+  KEYMAP_SOURCE: layouts/aurora_lily58_qmk
 
 jobs:
   build:
-    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
+    name: Aurora Lily58 QMK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout keebs
+        uses: actions/checkout@v4
+
+      - name: Checkout QMK firmware
+        uses: actions/checkout@v4
+        with:
+          repository: qmk/qmk_firmware
+          path: qmk_firmware
+          submodules: recursive
+
+      - name: Install keymap
+        run: |
+          keymap_dir="$QMK_HOME/keyboards/$KEYBOARD/keymaps/$KEYMAP"
+          mkdir -p "$keymap_dir"
+          cp "$KEYMAP_SOURCE/keymap.c" "$KEYMAP_SOURCE/rules.mk" "$keymap_dir/"
+
+      - name: Compile firmware
+        run: |
+          docker run --rm \
+            -v "$QMK_HOME:/qmk_firmware" \
+            -w /qmk_firmware \
+            qmkfm/qmk_cli:1.2.0 \
+            qmk compile -kb "$KEYBOARD" -km "$KEYMAP"
+
+      - name: Collect firmware
+        run: |
+          mkdir -p firmware
+          find "$QMK_HOME" -maxdepth 1 -type f \( -name "*.uf2" -o -name "*.hex" -o -name "*.bin" \) -print -exec cp {} firmware/ \;
+          test -n "$(find firmware -maxdepth 1 -type f -print -quit)"
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: aurora-lily58-qmk-firmware
+          path: firmware/*
