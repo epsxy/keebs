@@ -10,6 +10,7 @@ enum layers {
 
 enum custom_keycodes {
     LOWER_APP = SAFE_RANGE,
+    APP_BASE,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -38,7 +39,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_APP] = LAYOUT(
-        KC_ESC,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        APP_BASE, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         LGUI(KC_TAB), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, HYPR(KC_T),              XXXXXXX, XXXXXXX, HYPR(KC_I), XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, HYPR(KC_S), XXXXXXX, HYPR(KC_F), HYPR(KC_G),             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MCTL, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, HYPR(KC_C), XXXXXXX, HYPR(KC_B), LGUI(KC_GRV), LGUI(KC_TAB), XXXXXXX, LCTL(KC_LEFT), LCTL(KC_DOWN), LCTL(KC_UP), LCTL(KC_RIGHT), XXXXXXX,
@@ -68,12 +69,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
                 if (!lower_app_used && timer_elapsed(lower_app_timer) < TAPPING_TERM) {
                     set_oneshot_layer(_APP, ONESHOT_START);
+                    clear_oneshot_layer_state(ONESHOT_PRESSED);
                 }
+            }
+            return false;
+        case APP_BASE:
+            if (record->event.pressed) {
+                reset_oneshot_layer();
+                layer_clear();
             }
             return false;
     }
 
     return true;
+}
+
+void keyboard_post_init_user(void) {
+#ifdef RGB_MATRIX_ENABLE
+    rgb_matrix_disable_noeeprom();
+#endif
+#ifdef RGBLIGHT_ENABLE
+    rgblight_disable_noeeprom();
+#endif
 }
 
 #ifdef ENCODER_ENABLE
