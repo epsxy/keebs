@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "gpio.h"
 #include "keymap_french.h"
 
 enum layers {
@@ -84,12 +85,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-void keyboard_post_init_user(void) {
-#ifdef RGB_MATRIX_ENABLE
-    rgb_matrix_disable_noeeprom();
-#endif
-#ifdef RGBLIGHT_ENABLE
-    rgblight_disable_noeeprom();
+void keyboard_pre_init_user(void) {
+#ifdef CONVERT_TO_LIATRIS
+    gpio_set_pin_output(24);
+    gpio_write_pin_high(24);
 #endif
 }
 

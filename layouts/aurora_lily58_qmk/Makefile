@@ -7,7 +7,7 @@ KEYMAP_DIR := $(QMK_HOME)/keyboards/$(KEYBOARD)/keymaps/$(KEYMAP)
 
 install:
 	mkdir -p "$(KEYMAP_DIR)"
-	cp keymap.c rules.mk "$(KEYMAP_DIR)/"
+	cp config.h keymap.c rules.mk "$(KEYMAP_DIR)/"
 
 compile: install
 	qmk compile -kb "$(KEYBOARD)" -km "$(KEYMAP)"
